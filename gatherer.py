@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 
 import xml.etree.ElementTree
-import os, urllib, gzip
+import os, urllib, gzip, Image
 
 def search(filename, searchterm):
-    DOMtree = xml.etree.ElementTree.parse(filename)
-    root = DOMtree.getroot()
+    root = xml.etree.ElementTree.parse(filename).getroot()
 
     matchlist = []
     for anime in root:
@@ -56,3 +55,13 @@ def get_info(aid):
 	with open("info_cache/"+aid+".xml", "r") as f:
 		info = f.read()
 	return info
+
+BASE_URL_IMGSERVER = "http://img7.anidb.net/pics/anime/"
+
+def get_img(imgid):
+	# check cache first
+	if not os.path.exists("img_cache/"+imgid):
+		urllib.urlretrieve(BASE_URL_IMGSERVER+imgid, "img_cache/"+imgid)
+
+	img = Image.open("img_cache/"+imgid)
+	return img
