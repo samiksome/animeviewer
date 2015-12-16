@@ -23,6 +23,17 @@ class Handler:
 		searchresultscreen.show()
 		searchscreen.hide()
 
+	def backButtonClicked(self,*args):
+		currentscr = headline.get_text()
+		if currentscr=="Anime information":
+			headline.set_text("Search results")
+			searchresultscreen.show()
+			infoscreen.hide()
+		elif currentscr=="Search results":
+			headline.set_text("Search for anime")
+			searchscreen.show()
+			searchresultscreen.hide()
+
 	def searchResultActivated(self,*args):
 		aid = args[1].get_children()[0].get_children()[1].get_text()
 		dispname = args[1].get_children()[0].get_children()[0].get_text()
@@ -33,6 +44,9 @@ class Handler:
 		searchresultscreen.hide()
 
 def populate_results(matchlist):
+	children = searchresultlist.get_children()
+	for child in children:
+		searchresultlist.remove(child)
 	for item in matchlist:
 		row = Gtk.ListBoxRow()
 		hbox = Gtk.Box(Gtk.Orientation.HORIZONTAL,0)
