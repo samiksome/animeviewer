@@ -2,6 +2,8 @@
 
 from xml.dom.minidom import parse
 import xml.dom.minidom
+import os, os.path
+import urllib, gzip
 
 def search(file,searchterms):
 	DOMTree = xml.dom.minidom.parse(file)
@@ -40,3 +42,19 @@ def search(file,searchterms):
 			matchlist.append([anime.getAttribute("aid"),dispname])
 
 	return matchlist
+
+def get_info(aid):
+	if(os.path.exists("info_cache/"+aid+".xml")):
+		with open("info_cache/"+aid+".xml","r") as f:
+			info = f.read()
+		return info
+
+	else:
+		urllib.urlretrieve("http://api.anidb.net:9001/httpapi?request=anime&client=mantisviewer&clientver=1&protover=1&aid="+aid,"info_cache/"+aid+".xml.gz")
+		with gzip.open("info_cache/"+aid+".xml.gz") as f:
+			content = f.read()
+		f = open("info_cache/"+aid+".xml","w")
+		f.write(content)
+		f.close()
+		os.remove("info_cache/"+aid+".xml.gz")
+		return get_info(aid)
