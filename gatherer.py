@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from xml.dom.minidom import parse
 import xml.dom.minidom
 import xml.etree.ElementTree
 
