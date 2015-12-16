@@ -2,8 +2,12 @@
 
 import gatherer
 
-searchterms = raw_input(">")
-matchlist = gatherer.fast_search("anime-titles.xml",searchterms)
+searchterms = raw_input("title>")
+matchlist = gatherer.search("anime-titles.xml",searchterms)
 for i,v in enumerate(matchlist):
-	print i, v
+	print i+1, v[1]
 
+chosen_anime = int(raw_input("choose>"))
+chosen_anime = chosen_anime-1
+info = gatherer.get_info(matchlist[chosen_anime][0])
+print info
