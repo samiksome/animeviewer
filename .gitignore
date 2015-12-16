@@ -1,0 +1,6 @@
+*.pyc
+*.swo
+*.swp
+tags
+img_cache/
+info_cache/
