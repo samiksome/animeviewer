@@ -1,9 +1,9 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 import gatherer
 
-searchterms = input("search title ")
-matchlist = gatherer.search("anime-titles.xml",searchterms)
-for i in range(len(matchlist)):
-	print str(i+1)+": "+matchlist[i][1]
-	
+searchterms = raw_input(">")
+matchlist = gatherer.fast_search("anime-titles.xml",searchterms)
+for i,v in enumerate(matchlist):
+	print i, v
+
