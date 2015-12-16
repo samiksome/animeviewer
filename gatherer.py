@@ -3,11 +3,12 @@
 from xml.dom.minidom import parse
 import xml.dom.minidom
 
-def search(file,str):
+def search(file,searchterms):
 	DOMTree = xml.dom.minidom.parse(file)
 	collection = DOMTree.documentElement
 	animes = collection.getElementsByTagName("anime")
 
+	matchlist=[]
 	for anime in animes:
 		titles = anime.getElementsByTagName("title")
 
@@ -19,19 +20,23 @@ def search(file,str):
 			elif(title.getAttribute("xml:lang")=="en" and title.getAttribute("type")=="official"):
 				enname = title.childNodes[0].data
 
-		words = str.split()
+		words = searchterms.split()
 		allwords = True
 		for word in words:
 			if(not(word.lower() in jpname.lower()) and not(word.lower() in enname.lower())):
 				allwords = False
 				break
 		if(allwords):
+			dispname = ""
 			if(enname==""):
-				print jpname
+				dispname = jpname
 			elif(jpname==""):
-				print enname
+				dispname = enname
 			else:
 				if(enname==jpname):
-					print enname
+					dispname = enname
 				else:
-					print enname+" | "+jpname
+					dispname = enname+" | "+jpname
+			matchlist.append([anime.getAttribute("aid"),dispname])
+
+	return matchlist
