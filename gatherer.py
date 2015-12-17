@@ -32,7 +32,7 @@ def search(filename, searchterm):
 		if enname == jpname:
 		    dispname = enname
 		else:
-		    dispname = enname + " | " + jpname
+		    dispname = enname + "\n" + jpname
 
 	    matchlist.append([anime.attrib['aid'], dispname])
 

@@ -9,6 +9,27 @@ Rectangle {
 
 	signal exit_gui()
 	signal search_start(string param)
+	signal browse_back()
+	signal browse_forward()
+	
+	function setInfoAreaVisibility(val) {
+	    info_area.visible=val
+	    info_area_shadow.visible=val
+	    browse_bar.visible=val
+	    browse_back_button.visible=val
+	    browse_forward_button.visible=val
+	    browse_back_button.visible=val
+	    browse_forward_button.visible=val
+	    browse_back_button_mouse_area.visible=val
+	    browse_forward_button_mouse_area.visible=val
+	    anime_title.visible=val
+	    anime_picture.visible=val
+	}
+	
+	function setAnimeInfo(dispname,picture) {
+	    anime_title.text=dispname
+	    anime_picture.source=picture
+	}
 	
 	function clearSearchInput() {
 	    search_input.text=""
@@ -29,7 +50,7 @@ Rectangle {
 		height:parent.height*0.05
 		anchors.leftMargin:parent.height*0.0125
 		verticalAlignment:Text.AlignVCenter
-		text:"Search Anime"
+		text:"Anime Viewer"
 		font.bold:false
 		font.family:"Roboto"
 		font.pointSize:parent.height*0.015
@@ -122,5 +143,112 @@ Rectangle {
 		anchors.rightMargin:width*0.5
 
 		onClicked:parent.exit_gui()
+	}
+	
+	Rectangle {
+	    id:"info_area_shadow"
+	    anchors.top:info_area.top
+	    anchors.left:info_area.left
+	    anchors.right:info_area.right
+	    height:info_area.height
+	    anchors.topMargin:2
+	    radius:search_bar.height*0.1
+	    color:"#444444"
+	    visible:false
+	}
+	Rectangle {
+	    id:"info_area"
+	    anchors.top:search_bar_shadow.bottom
+	    anchors.left:parent.left
+	    anchors.right:parent.right
+	    anchors.bottom:parent.bottom
+	    anchors.topMargin:parent.height*0.05
+	    anchors.bottomMargin:parent.height*0.05
+	    anchors.leftMargin:parent.height*0.05
+	    anchors.rightMargin:parent.height*0.05
+	    radius:search_bar.height*0.1
+	    color:"#ffffff"
+	    visible:false
+	}
+	
+	Rectangle {
+	    id:"browse_bar"
+	    anchors.top:info_area.top
+	    anchors.left:info_area.left
+	    anchors.right:info_area.right
+	    height:search_bar.height*1.5
+	    radius:search_bar.height*0.1
+	    color:"#0d47a1"
+	    visible:false
+	}
+	Text {
+	    id:"browse_back_button"
+	    anchors.left:info_area.left
+	    anchors.verticalCenter:browse_bar.verticalCenter
+	    font.family:"Roboto"
+	    font.pointSize:search_button.font.pointSize
+	    anchors.leftMargin:search_button.anchors.rightMargin
+	    text:"\u2190"
+	    color:"#ffffff"
+	    visible:false
+	}
+	MouseArea {
+	    id:"browse_back_button_mouse_area"
+	    anchors.left:info_area.left
+	    anchors.right:anime_title.left
+	    anchors.top:info_area.top
+	    anchors.bottom:browse_bar.bottom
+	    visible:false
+	    
+	    onClicked:parent.browse_back()
+	}
+	Text {
+	    id:"browse_forward_button"
+	    anchors.right:info_area.right
+	    anchors.verticalCenter:browse_bar.verticalCenter
+	    font.family:"Roboto"
+	    font.pointSize:search_button.font.pointSize
+	    anchors.rightMargin:search_button.anchors.rightMargin
+	    text:"\u2192"
+	    color:"#ffffff"
+	    visible:false
+	}
+	MouseArea {
+	    id:"browse_forward_button_mouse_area"
+	    anchors.left:anime_title.right
+	    anchors.right:info_area.right
+	    anchors.top:info_area.top
+	    anchors.bottom:browse_bar.bottom
+	    visible:false
+	    
+	    onClicked:parent.browse_forward()
+	}
+	Text {
+	    id:"anime_title"
+	    anchors.verticalCenter:browse_bar.verticalCenter
+	    anchors.left:browse_back_button.right
+	    anchors.right:browse_forward_button.left
+	    anchors.leftMargin:parent.height*0.03
+	    anchors.rightMargin:parent.height*0.03
+	    font.family:"Roboto"
+	    font.pointSize:parent.height*0.03
+	    wrapMode:Text.WordWrap
+	    text:"Anime Title\nJapanese Name"
+	    color:"#ffffff"
+	    visible:false
+	}
+	
+	Image {
+	    id:"anime_picture"
+	    anchors.top:browse_bar.bottom
+	    anchors.left:info_area.left
+	    anchors.bottom:info_area.bottom
+	    anchors.topMargin:parent.height*0.03
+	    anchors.bottomMargin:parent.height*0.03
+	    anchors.leftMargin:parent.height*0.03
+	    anchors.rightMargin:parent.height*0.03
+	    smooth:true
+	    fillMode:Image.PreserveAspectFit
+	    visible:false
 	}
 }
