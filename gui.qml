@@ -44,6 +44,16 @@ Rectangle {
 		color:"#444444"
 	}
 
+    Rectangle {
+	    id:"search_bar_shadow"
+	    anchors.left:search_bar.left
+		anchors.right:search_bar.right
+		anchors.top:search_bar.top
+		anchors.topMargin:2
+		height:search_bar.height
+		radius:search_bar.radius
+		color:"#444444"
+	}
 	Rectangle {
 	    id:"search_bar"
 		anchors.top:top_bar_shadow.bottom
@@ -53,6 +63,7 @@ Rectangle {
 		anchors.topMargin:parent.height*0.05
 		anchors.leftMargin:parent.height*0.05
 		anchors.rightMargin:parent.height*0.05
+		radius:height*0.1
 		color:"#ffffff"
 	}
 	TextInput {
@@ -88,14 +99,6 @@ Rectangle {
 	    anchors.left:search_input.right
 	    
 	    onClicked:parent.search_start(search_input.text)
-	}
-	Rectangle {
-	    id:"search_bar_shadow"
-	    anchors.left:search_bar.left
-		anchors.right:search_bar.right
-		anchors.top:search_bar.bottom
-		height:2
-		color:"#444444"
 	}
 
 	Rectangle {
